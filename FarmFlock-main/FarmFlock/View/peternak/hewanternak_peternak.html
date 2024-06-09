@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmFlock</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link rel="icon" href="../assets/img/FarmFlock.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- FILE CSS -->
+    <link rel="stylesheet" href="../assets/style/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"/>
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header_peternak" class="header fixed-top d-flex">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between">
+              <i class="bi bi-list toggle-sidebar-btn"></i>
+          </div>
+      
+          <div class="d-flex justify-content-between align-items-end">
+              <a href="#" class="logo d-flex">
+                  <span class="d-none d-lg-block mr-3">Farm</span>
+                  <span class="d-none d-lg-block">
+                      <img src="../assets/img/FarmFlock.png" alt="" style="margin-left: 5px; margin-right: 5px; margin-top: -10px;">
+                  </span>
+                  <span class="d-none d-lg-block">Flock</span>
+              </a>
+          </div>
+          
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+          
+          <div class="d-flex flex-column align-items-center mb-3 mt-2">
+              <img id="pppeternak" alt="" height="80px" width="80px" class="rounded-circle">
+              <b><h4 class="mt-3" id="h4NamaPeternak"></h4></b>
+              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+              <script>
+                $(document).ready(function() {
+                    $.ajax({
+                        url: '/FarmFlock/Controller/sesiLogin.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.nama_peternak) {
+                                $('#h4NamaPeternak').text(response.nama_peternak);
+                                if (response.foto_peternak == null) {
+                                    $('#pppeternak').attr('src', '../assets/img/gambar_profil_peternak/pppeternak.png');
+                                } else {
+                                    $('#pppeternak').attr('src', '../assets/img/gambar_profil_peternak/' + response.foto_peternak);
+                                }
+                            } else {
+                                alert('Error: ' + response.error);
+                            }
+                        },
+                        error: function() {
+                            alert('Failed to retrieve peternak name');
+                        }
+                    });
+                });
+              </script>
+              <p class="px-2 py-1 bg-custom-brown">Peternak</p>
+          </div>               
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="dashboard_peternak.html">
+              <i class="bi bi-grid"></i>
+              <span>Beranda</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="profil_peternak.html">
+              <i class="bi bi-person"></i>
+              <span>Profil</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="hewanternak_peternak.html">
+              <i class="bi bi-house-heart"></i>
+              <span>Hewan Ternak</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#gembalacerdas" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-person-check"></i><span>Gembala Cerdas</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="gembalacerdas" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="pengajuan_peternak.html">
+                      <span>Pengajuan</span>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#penjadwalan" data-bs-toggle="collapse" href="#">
+                        <span>Penjadwalan</span>
+                    </a>
+                    <ul id="penjadwalan" class="nav-content-2 collapse " data-bs-parent="#nav-content">
+                        <li>
+                            <a href="penjadwalankunjungan_peternak.html">
+                            <i class="bi bi-circle"></i><span>Kunjungan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="penjadwalanpelatihan_peternak.html">
+                            <i class="bi bi-circle"></i><span>Pelatihan</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+              </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" id="logout" href="#">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Keluar</span>
+          </a>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $(document).ready(function() {
+                $('#logout').click(function(event) {
+                    event.preventDefault(); // Mencegah tautan agar tidak diarahkan ulang
+    
+                    $.ajax({
+                      url: '/FarmFlock/Controller/sesiLogout.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                window.location.href = '../index.html';
+                            } else {
+                                alert('Gagal logout. Silakan coba lagi.');
+                            }
+                        },
+                        error: function() {
+                            alert('Terjadi kesalahan. Silakan coba lagi.');
+                        }
+                    });
+                });
+            });
+        </script>
+              
+          </li>
+      </ul>
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Hewan Ternak</h1>
+        </div><!-- End Page Title -->
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambahHewan">Tambah</button>
+
+        <section class="section dashboard">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="row mt-3" id="hewanCardsContainer">
+                  
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $(document).ready(function() {
+                function getDataPeternakan(idPeternak, callback) {
+                    $.ajax({
+                        url: "/FarmFlock/Controller/Peternakan.php",
+                        type: "GET",
+                        data: {
+                            action: "getPeternakanById",
+                            id_peternak: idPeternak,
+                        },
+                        success: function(response) {
+                            var peternakan = JSON.parse(response);
+                            callback(peternakan[0]);
+                        },
+                    });
+                }
+
+                function getDataJenisHewan(idJenisHewan, callback) {
+                    $.ajax({
+                        url: "/FarmFlock/Controller/JenisHewan.php",
+                        type: "GET",
+                        data: {
+                            action: "getJenisHewanById",
+                            idJenisHewan: idJenisHewan,
+                        },
+                        success: function(response) {
+                            var jenisHewan = JSON.parse(response);
+                            callback(jenisHewan[0]);
+                        },
+                    });
+                }
+
+                function getDataHewan(idHewan, callback) {
+                    $.ajax({
+                        url: "/FarmFlock/Controller/Hewan.php",
+                        type: "GET",
+                        data: {
+                            action: "getDataHewanById",
+                            idHewan: idHewan,
+                        },
+                        success: function(response) {
+                            var dataHewan = JSON.parse(response);
+                            callback(dataHewan[0]);
+                        },
+                    });
+                }
+                        
+              function loadHewanPeternakData(idPeternakan) {
+                $.ajax({
+                    url: '/FarmFlock/Controller/HewanPeternakan.php',
+                    type: 'GET',
+                    data: {
+                        action: "getHewanPeternakanByIdPeternakan", 
+                        idPeternakan: idPeternakan
+                    },
+                    success: function(dataresponse) {
+                        var hewanPeternakanData = JSON.parse(dataresponse);
+                        var hewanCardsContainer = $('#hewanCardsContainer');
+                        hewanCardsContainer.empty();
+                        
+                        hewanPeternakanData.forEach(function(HewanPeternakan) {
+                            getDataJenisHewan(HewanPeternakan.id_jenis_hewan, function(dataJenisHewan){
+                                getDataHewan(dataJenisHewan.id_hewan, function(dataHewan){
+                                    var imgSrc;
+                                    switch (dataHewan.hewan) {
+                                        case "Sapi":
+                                            imgSrc = "../assets/img/cow.png";
+                                            break;
+                                        case "Kerbau":
+                                            imgSrc = "../assets/img/buffalo.png";
+                                            break;
+                                        case "Domba":
+                                            imgSrc = "../assets/img/sheep.png";
+                                            break;
+                                        case "Kambing":
+                                            imgSrc = "../assets/img/goat.png";
+                                            break;
+                                    }
+                                    var cardHTML = `
+                                    <div class="col-xxxl-4 col-md-4">
+                                    <div class="card info-card sales-card">
+                                        <div class="card-body">
+                                        <h4 class="card-title text-center">${dataHewan.hewan} ${dataJenisHewan.jenis_hewan}</h4>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center me-3">
+                                                <img src="${imgSrc}" width="50px" height="50px" alt="">
+                                            </div>
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <h6 class="text-primary">${HewanPeternakan.jumlah}</h6>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                `;
+                                hewanCardsContainer.append(cardHTML);
+                                })
+                            })
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+              }
+
+              $.ajax({
+                    url: '/FarmFlock/Controller/sesiLogin.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        getDataPeternakan(response.id_peternak, function(dataPeternakan) {
+                            var idPeternakan = dataPeternakan.id_peternakan; 
+                            loadHewanPeternakData(idPeternakan);
+                        });
+                    },
+                    error: function() {
+                        alert('Failed to retrieve peternak');
+                    }
+                });
+            });
+          </script>          
+
+        <!-- Modal Tambah Hewan -->
+        <div class="modal fade" id="ModalTambahHewan" tabindex="-1" aria-labelledby="ModalTambahHewan" aria-hidden="true" data-bs-backdrop="false">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="ModalTambahHewan">Tambah Jumlah Hewan Ternak</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Pilih Hewan</label>
+                            <div class="form-group">
+                                <select class="form-control" id="pilihHewan" onchange="loadJenisHewanOptions(this.value)">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Pilih Jenis Hewan</label>
+                            <div class="input-group">
+                            <select class="form-select" id="pilihJenisHewan" aria-label="Example select with button addon">
+                            </select>
+                                <button class="btn btn-outline-primary" type="button" data-bs-target="#ModalTambahJenisHewan" data-bs-toggle="modal" data-bs-dismiss="modal">Tambah</button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Masukkan Jumlah</label>
+                            <input class="form-control" type="number" id="jumlahHewan">
+                        </div>
+                    </form>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        function getAllHewan() {
+                            $.ajax({
+                                url: "/FarmFlock/Controller/Hewan.php",
+                                type: "GET",
+                                data: {
+                                    action: "getAllHewan"
+                                },
+                                success: function(response) {
+                                    updateHewanOptions(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Terjadi kesalahan: " + error);
+                                }
+                            });
+                        }
+
+                        function updateHewanOptions(data) {
+                            var arrData = JSON.parse(data);
+                            var selectElement = document.getElementById("pilihHewan");
+                            selectElement.innerHTML = '<option value="" disabled selected>Pilih Hewan</option>';
+
+                            arrData.forEach(function(item) {
+                                var option = document.createElement("option");
+                                option.text = item.hewan;
+                                option.value = item.id_hewan;
+                                selectElement.appendChild(option);
+                            });
+                        }
+
+                        function loadJenisHewanOptions(idHewan) {
+                            $.ajax({
+                                url: "/FarmFlock/Controller/JenisHewan.php",
+                                type: "GET",
+                                data: {
+                                    action: "getJenisHewanByIdHewan",
+                                    id_hewan: idHewan
+                                },
+                                success: function(response) {
+                                    var jenisHewanData = JSON.parse(response);
+                                    var selectJenisHewan = document.getElementById("pilihJenisHewan");
+                                    selectJenisHewan.innerHTML = '<option value="" disabled selected>Pilih Jenis Hewan</option>';
+
+                                    jenisHewanData.forEach(function(item) {
+                                        var option = document.createElement("option");
+                                        option.text = item.jenis_hewan;
+                                        option.value = item.id_jenis_hewan;
+                                        selectJenisHewan.appendChild(option);
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Terjadi kesalahan: " + error);
+                                }
+                            });
+                        }
+
+                        getAllHewan();
+                    </script>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batalkan</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btnAddHewanPeternakan">Tambahkan</button>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        function getDataPeternakan(idPeternak, callback) {
+                            $.ajax({
+                                url: "/FarmFlock/Controller/Peternakan.php",
+                                type: "GET",
+                                data: {
+                                    action: "getPeternakanById",
+                                    id_peternak: idPeternak,
+                                },
+                                success: function(response) {
+                                    var peternakan = JSON.parse(response);
+                                    callback(peternakan[0]);
+                                },
+                            });
+                        }
+
+                        $('#btnAddHewanPeternakan').click(function() {
+                            $.ajax({
+                                url: '/FarmFlock/Controller/sesiLogin.php',
+                                method: 'GET',
+                                dataType: 'json',
+                                success: function(response) {
+                                    getDataPeternakan(response.id_peternak, function(dataPeternakan) {
+                                        var idPeternakan = dataPeternakan.id_peternakan; 
+                                        var idJenisHewan = $('#pilihJenisHewan').val();
+                                        var jumlah = $('#jumlahHewan').val();
+
+                                        if (idJenisHewan == null) {
+                                            alert('Pilih jenis hewan!');
+                                        } else if (jumlah.trim() <= 0) {
+                                            alert('Masukkan jumlah!');
+                                        } else {
+                                            $.ajax({
+                                                url: '/FarmFlock/Controller/HewanPeternakan.php',
+                                                type: 'GET',
+                                                data: {
+                                                    action: 'checkHewanPeternakan',
+                                                    id_peternakan: idPeternakan,
+                                                    id_jenis_hewan: idJenisHewan
+                                                },
+                                                success: function(response) {
+                                                    var result = JSON.parse(response);
+                                                    if (result[0]) {
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/FarmFlock/Controller/HewanPeternakan.php',
+                                                            data: {
+                                                                action: 'updateHewanPeternakan',
+                                                                id_peternakan: idPeternakan,
+                                                                id_jenis_hewan: idJenisHewan, 
+                                                                jumlah: jumlah
+                                                            },
+                                                            dataType: 'json',
+                                                            success: function(response) {
+                                                            },
+                                                            error: function(xhr, status, error) {
+                                                                console.error("Terjadi kesalahan: " + error);
+                                                            }
+                                                        });
+                                                        alert("Jumlah hewan peternakan berhasil diperbarui!");
+                                                    } else {
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/FarmFlock/Controller/HewanPeternakan.php',
+                                                            data: {
+                                                                action: 'addHewanPeternakan',
+                                                                id_peternakan: idPeternakan,
+                                                                id_jenis_hewan: idJenisHewan, 
+                                                                jumlah: jumlah
+                                                            },
+                                                            dataType: 'json',
+                                                            success: function(response) {
+                                                            },
+                                                            error: function(xhr, status, error) {
+                                                                console.error("Terjadi kesalahan: " + error);
+                                                            }
+                                                        });
+                                                        alert("Hewan peternakan berhasil ditambahkan!");
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.error("Terjadi kesalahan: " + error);
+                                                }
+                                            });
+                                        }
+                                    });
+                                },
+                                error: function() {
+                                    alert('Failed to retrieve peternak');
+                                }
+                            });
+                        })
+                    });
+                </script>
+            </div>
+            </div>
+        </div>
+
+        <!-- Modal Tambah Jenis Hewan -->
+        <div class="modal fade" id="ModalTambahJenisHewan" aria-hidden="true" aria-labelledby="ModalTambahJenisHewan" tabindex="-1" data-bs-backdrop="false">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="ModalTambahJenisHewan">Tambah Jenis Hewan</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Pilih Hewan</label>
+                            <div class="form-group">
+                                <select class="form-control" id="pilihHewan2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Jenis Hewan : </label>
+                            <textarea class="form-control" id="jenisHewanBaru"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-target="#ModalTambahHewan" data-bs-toggle="modal" data-bs-dismiss="modal">Kembali</button>
+                <button type="button" id="btnAddJenisHewan" class="btn btn-primary" data-bs-dismiss="modal">Tambah</button>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    function getAllHewan2() {
+                        $.ajax({
+                            url: "/FarmFlock/Controller/Hewan.php",
+                            type: "GET",
+                            data: {
+                                action: "getAllHewan"
+                            },
+                            success: function(response) {
+                                updateHewanOptions2(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Terjadi kesalahan: " + error);
+                            }
+                        });
+                    }
+
+                    function updateHewanOptions2(data) {
+                        var arrData = JSON.parse(data);
+                        var selectElement = document.getElementById("pilihHewan2");
+                        selectElement.innerHTML = '<option value="" disabled selected>Pilih Hewan</option>';
+
+                        arrData.forEach(function(item) {
+                            var option = document.createElement("option");
+                            option.text = item.hewan;
+                            option.value = item.id_hewan;
+                            selectElement.appendChild(option);
+                        });
+                    }
+
+                    $(document).ready(function() {
+                        $('#btnAddJenisHewan').click(function() {
+                            var id_hewan = $('#pilihHewan2').val();
+                            var jenis_hewan = $('#jenisHewanBaru').val();
+                            
+                            if (id_hewan == null) {
+                                alert("Pilih hewan!");
+                            } else if (jenis_hewan.trim() == '') {
+                                alert("Jenis hewan tidak boleh kosong!")
+                            } else {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/FarmFlock/Controller/JenisHewan.php',
+                                    data: {
+                                        action: 'addJenisHewanBaru',
+                                        id_hewan: id_hewan,
+                                        jenis_hewan: jenis_hewan
+                                    },
+                                    dataType: 'json',
+                                });
+                                alert('Jenis hewan baru berhasil ditambahkan');
+                            }
+                        })
+                    });
+
+                    getAllHewan2()
+                </script> 
+            </div>
+            </div>
+        </div>
+        
+        
+    </main><!-- End #main -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="../assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../assets/vendor/quill/quill.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+
+  </body>
+</html>

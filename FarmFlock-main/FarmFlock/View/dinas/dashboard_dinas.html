@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmFlock</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link rel="icon" href="../assets/img/FarmFlock.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- FILE CSS -->
+    <link href="../assets/style/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header_dinas" class="header fixed-top d-flex">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between">
+              <i class="bi bi-list toggle-sidebar-btn"></i>
+          </div>
+      
+          <div class="d-flex justify-content-between align-items-end">
+              <a href="#" class="logo d-flex">
+                  <span class="d-none d-lg-block mr-3">Farm</span>
+                  <span class="d-none d-lg-block">
+                      <img src="../assets/img/FarmFlock.png" alt="" style="margin-left: 5px; margin-right: 5px; margin-top: -10px;">
+                  </span>
+                  <span class="d-none d-lg-block">Flock</span>
+              </a>
+          </div>
+          
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+          
+        <div class="d-flex flex-column align-items-center mb-3 mt-2">
+          <img id="ppdinas" alt="" height="80px" width="80px" class="rounded-circle">
+          <b><h4 class="mt-3">Admin Dinas</h4></b>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: '/FarmFlock/Controller/sesiLogin.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.id_dinas) {
+                            if (response.foto_dinas == null) {
+                                $('#ppdinas').attr('src', '../assets/img/gambar_profil_dinas/ppdinas.png');
+                            } else {
+                                $('#ppdinas').attr('src', '../assets/img/gambar_profil_dinas/' + response.foto_dinas);
+                            }
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to retrieve Dinas');
+                    }
+                });
+            });
+          </script>
+          <p class="px-2 py-1 bg-custom-green">Dinas Peternakan</p>
+        </div>               
+
+          <li class="nav-item">
+              <a class="nav-link " href="dashboard_dinas.html">
+              <i class="bi bi-grid"></i>
+              <span>Beranda</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="profil_dinas.html">
+              <i class="bi bi-person"></i>
+              <span>Profil</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="tambahptl_dinas.html">
+              <i class="bi bi-person-plus"></i>
+              <span>Akun PTL</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#gembalacerdas" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-person-check"></i><span>Gembala Cerdas</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="gembalacerdas" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a class="nav-link collapsed" data-bs-target="#pengajuan" data-bs-toggle="collapse" href="#">
+                          <span>Pengajuan</span>
+                      </a>
+                      <ul id="pengajuan" class="nav-content-2 collapse" data-bs-parent="#nav-content">
+                          <li>
+                              <a href="pengajuankunjungan_dinas.html">
+                              <i class="bi bi-circle"></i><span>Kunjungan</span>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="pengajuanpelatihan_dinas.html">
+                              <i class="bi bi-circle"></i><span>Pelatihan</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link collapsed" data-bs-target="#penjadwalan" data-bs-toggle="collapse" href="#">
+                          <span>Penjadwalan</span>
+                      </a>
+                      <ul id="penjadwalan" class="nav-content-2 collapse " data-bs-parent="#nav-content">
+                          <li>
+                              <a href="penjadwalankunjungan_dinas.html">
+                              <i class="bi bi-circle"></i><span>Kunjungan</span>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="penjadwalanpelatihan_dinas.html">
+                              <i class="bi bi-circle"></i><span>Pelatihan</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="../index.html">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Keluar</span>
+              </a>
+          </li>
+      </ul>
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+      <div class="pagetitle">
+        <h1>Beranda</h1>
+      </div><!-- End Page Title -->
+
+      <section class="section dashboard">
+        <div class="row">
+
+          <!-- Left side columns -->
+          <div class="col-lg-8">
+            <div class="row">
+
+            <!-- Pengajuan Dalam Antrian Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kunjungan Dalam Antrian</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-week"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="antrian-count">Loading...</h6>
+                                <span id="antrian-percentage" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Dalam Antrian Card -->
+
+            <!-- Pengajuan Berjalan Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kunjungan Berjalan</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-range"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="berjalan-count">Loading...</h6>
+                                <span id="berjalan-percentage" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Berjalan Card -->
+
+            <!-- Pengajuan Selesai Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card customers-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kunjungan Selesai</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="selesai-count">Loading...</h6>
+                                <span id="selesai-percentage" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Selesai Card -->
+
+            <!-- Pengajuan Dalam Antrian Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card customers-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pelatihan Dalam Antrian</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-week"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="antrian-count2">Loading...</h6>
+                                <span id="antrian-percentage2" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Dalam Antrian Card -->
+
+            <!-- Pengajuan Berjalan Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pelatihan Berjalan</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-range"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="berjalan-count2">Loading...</h6>
+                                <span id="berjalan-percentage2" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Berjalan Card -->
+
+            <!-- Pengajuan Selesai Card -->
+            <div class="col-xxl-4 col-md-4">
+                <div class="card info-card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pelatihan Selesai</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 id="selesai-count2">Loading...</h6>
+                                <span id="selesai-percentage2" class="text-success small pt-1 fw-bold">Loading...</span>
+                                <span class="text-muted small pt-2 ps-1">dari keseluruhan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Pengajuan Selesai Card -->
+
+            <script>
+              $(document).ready(function() {
+                $.ajax({
+                    url: '/FarmFlock/Controller/Kunjungan.php',
+                    type: 'GET',
+                    data: {
+                        action: 'getJumlahKunjungan'
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        var belum = 0;
+                        var jalan = 0;
+                        var selesai = 0;
+    
+                        data.forEach(function(dataJumlah) {
+                          if (dataJumlah.id_status_berjalan == 1) {
+                            belum = dataJumlah.jumlah;
+                          }
+                          
+                          if (dataJumlah.id_status_berjalan == 2) {
+                            jalan = dataJumlah.jumlah;
+                          }
+                          
+                          if (dataJumlah.id_status_berjalan == 3) {
+                            selesai = dataJumlah.jumlah;
+                          }
+                        })
+    
+                        belum = parseInt(belum, 10);
+                        jalan = parseInt(jalan, 10);
+                        selesai = parseInt(selesai, 10);
+    
+                        var total = belum + jalan + selesai;
+    
+                        $('#antrian-count').text(belum);
+                        $('#antrian-percentage').text(total ? ((belum / total) * 100).toFixed(2) + '%' : '0.00%');
+    
+                        $('#berjalan-count').text(jalan);
+                        $('#berjalan-percentage').text(total ? ((jalan / total) * 100).toFixed(2) + '%' : '0.00%');
+    
+                        $('#selesai-count').text(selesai);
+                        $('#selesai-percentage').text(total ? ((selesai / total) * 100).toFixed(2) + '%' : '0.00%');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Terjadi kesalahan: " + error);
+                    }
+                  })
+
+                $.ajax({
+                    url: '/FarmFlock/Controller/Pelatihan.php',
+                    type: 'GET',
+                    data: {
+                        action: 'getJumlahPelatihan'
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        var belum2 = 0;
+                        var jalan2 = 0;
+                        var selesai2 = 0;
+    
+                        data.forEach(function(dataJumlah2) {
+                          if (dataJumlah2.id_status_berjalan == 1) {
+                            belum2 = dataJumlah2.jumlah;
+                          }
+                          
+                          if (dataJumlah2.id_status_berjalan == 2) {
+                            jalan2 = dataJumlah2.jumlah;
+                          }
+                          
+                          if (dataJumlah2.id_status_berjalan == 3) {
+                            selesai2 = dataJumlah2.jumlah;
+                          }
+                        })
+    
+                        belum2 = parseInt(belum2, 10);
+                        jalan2 = parseInt(jalan2, 10);
+                        selesai2 = parseInt(selesai2, 10);
+    
+                        var total2 = belum2 + jalan2 + selesai2;
+    
+                        $('#antrian-count2').text(belum2);
+                        $('#antrian-percentage2').text(total2 ? ((belum2 / total2) * 100).toFixed(2) + '%' : '0.00%');
+    
+                        $('#berjalan-count2').text(jalan2);
+                        $('#berjalan-percentage2').text(total2 ? ((jalan2 / total2) * 100).toFixed(2) + '%' : '0.00%');
+    
+                        $('#selesai-count2').text(selesai2);
+                        $('#selesai-percentage2').text(total2 ? ((selesai2 / total2) * 100).toFixed(2) + '%' : '0.00%');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Terjadi kesalahan: " + error);
+                    }
+                  })
+                });
+              </script>
+
+              <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Persebaran Jenis Hewan Ternak</h5>
+
+                        <div class="table-responsive"> <!-- Agar tabel bisa di-scroll jika konten terlalu panjang -->
+                            <table class="table table-bordered table-striped" style="width: 100%; max-width: 100%;"> <!-- Menetapkan lebar maksimum -->
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="px-3" style="background-color: rgb(213, 255, 190);">Jenis Hewan</th>
+                                        <th scope="col" class="px-3" style="background-color: rgb(255, 235, 146);">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyJenisHewan">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <script>
+                          $.ajax({
+                            url: '/FarmFlock/Controller/HewanPeternakan.php',
+                            type: 'GET',
+                            data: {
+                                action: 'getJumlahJenisHewan'
+                            },
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                                
+                                $('#tbodyJenisHewan').empty();
+
+                                data.forEach(function(item) {
+                                    var row = `<tr>
+                                                  <td class="px-3">${item.jenis_hewan}</td>
+                                                  <td class="px-3">${item.jumlah}</td>
+                                              </tr>`;
+                                    $('#tbodyJenisHewan').append(row);
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Terjadi kesalahan: " + error);
+                            }
+                        });
+                        </script>
+                    </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div><!-- End Left side columns -->
+
+          <!-- Right side columns -->
+          <div class="col-lg-4">
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Jadwal Pelatihan Mendatang</h5>
+
+              <div class="activity" id="activity-list">
+                <!-- Activity items will be inserted here -->
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $(document).ready(function() {
+              function fetchActivityData() {
+                $.ajax({
+                  url: '/FarmFlock/Controller/Pelatihan.php',
+                  type: 'GET',
+                  data: {
+                    action: 'getJadwalPelatihan'
+                  },
+                  success: function(response) {
+                    var data = JSON.parse(response);
+                    var activityList = $('#activity-list');
+                    activityList.empty(); // Clear existing content
+
+                    // Array of badge color classes
+                    var badgeColors = ['text-success', 'text-danger', 'text-warning', 'text-info', 'text-primary'];
+
+                    data.forEach(function(item, index) {
+                      var badgeColor = badgeColors[index % badgeColors.length]; // Cycle through colors
+
+                      var activityItem = `
+                        <div class="activity-item d-flex">
+                          <div class="activite-label">${item.hari} Hari</div>
+                          <i class='bi bi-circle-fill activity-badge ${badgeColor} align-self-start'></i>
+                          <div class="activity-content">
+                            <b>${item.judul_pelatihan}</b> | ${item.desa}
+                          </div>
+                        </div>
+                      `;
+                      activityList.append(activityItem);
+                    });
+                  },
+                  error: function(xhr, status, error) {
+                    console.error("Terjadi kesalahan: " + error);
+                  }
+                });
+              }
+
+              fetchActivityData();
+            });
+          </script>
+
+
+          <div class="card">    
+              <div class="card-body pb-0">
+                  <h5 class="card-title">Tingkat Keparahan Jenis Penyakit</h5>
+                  <div id="trafficChart" style="min-height: 450px;" class="echart"></div>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                  <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                          function fetchData() {
+                              $.ajax({
+                                  url: '/FarmFlock/Controller/Kunjungan.php',
+                                  type: 'GET',
+                                  data: {
+                                      action: 'getPenyakitData'
+                                  },
+                                  success: function(response) {
+                                      var data = JSON.parse(response);
+                                      var total = 0;
+                                      var tambahTotal = data.map(item => {
+                                          total += parseInt(item.jumlah);
+                                      });
+                                      var chartData = data.map(item => {
+                                          var persen = ((parseInt(item.jumlah) / total) * 100).toFixed(2);
+                                          return { value: persen, name: item.jenis_penyakit };
+                                      });
+                                      renderChart(chartData);
+                                  },
+                                  error: function(xhr, status, error) {
+                                      console.error("Terjadi kesalahan: " + error);
+                                  }
+                              });
+                          }
+      
+                          function renderChart(data) {
+                              const chartDom = document.querySelector("#trafficChart");
+                              const myChart = echarts.init(chartDom);
+  
+                              // Hitung total nilai untuk persentase
+                              const total = data.reduce((sum, item) => sum + item.value, 0);
+  
+                              const option = {
+                                  tooltip: {
+                                      trigger: 'item',
+                                      formatter: function(params) {
+                                          const percent = ((params.value / total) * 100).toFixed(2);
+                                          return `<b>Jenis Penyakit</b></br> ${params.name}<br/>Jumlah: ${params.value} (%)`;
+                                      }
+                                  },
+                                  series: [{
+                                      top: '0%',
+                                      bottom: '25%',
+                                      name: 'Jenis Penyakit',
+                                      type: 'pie',
+                                      radius: ['40%', '70%'],
+                                      avoidLabelOverlap: false,
+                                      label: {
+                                          show: false,
+                                          position: 'center'
+                                      },
+                                      emphasis: {
+                                          label: {
+                                              show: true,
+                                              fontSize: '18',
+                                              fontWeight: 'bold',
+                                              formatter: function(params) {
+                                                  const percent = ((params.value / total) * 100).toFixed(2);
+                                                  return `${params.name}\n${params.value} (%)`;
+                                              }
+                                          }
+                                      },
+                                      labelLine: {
+                                          show: false
+                                      },
+                                      data: data
+                                  }],
+                                  legend: {
+                                      bottom: '5%',
+                                      left: 'center'
+                                  },
+                              };
+  
+                              myChart.setOption(option);
+  
+                              // Make the chart responsive
+                              window.addEventListener('resize', () => {
+                                  myChart.resize();
+                              });
+  
+                              // Event listener for clicks
+                              myChart.on('click', function(params) {
+                                  alert(`You clicked on ${params.name}: ${params.value}`);
+                                  // You can add more actions here, such as navigating to another page
+                              });
+                          }
+                          fetchData();
+                      });
+                  </script>
+              </div>
+          </div><!-- End Website Traffic -->
+
+          </div><!-- End Right side columns -->
+
+        </div>
+      </section>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>FarmFlock</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="">B6 PPL for AGROINDUSTRI MODERN</a>
+      </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="../assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../assets/vendor/quill/quill.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+
+  </body>
+</html>
